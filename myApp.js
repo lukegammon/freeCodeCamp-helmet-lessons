@@ -13,6 +13,8 @@ app.use(helmet.hsts({maxAge: ninetyDaysInSeconds, force: true})) // force https 
 app.use(helmet.dnsPrefetchControl()); // stop DNS prefetching of records on page(links etc.)
 app.use(helmet.noCache()); // always download the newer version of a page, noCache tries to disable caching on client’s browser. 
 
+app.use(helmet.contentSecurityPolicy({directives: {defaultSrc: ["'self'"]}))
+
 
 
 
