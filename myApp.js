@@ -2,10 +2,15 @@ const express = require('express');
 const app = express();
 const helmet = require("helmet");
 
-app.use(helmet.hidePoweredBy()); // Hides that your backend is express
-app.use(helmet.frameguard({action: "DENY"})); // Stops your page fropm being used in an iframe(click hijacking)
-app.use(helmet.xssFilter()); // basic protection from unwanted scripts being run(via input forms etc)
-app.use(helmet.noSniff()); // MIME type Sniffing sets the X-Content-Type-Options to noSniff
+app.use(helmet.hidePoweredBy()); // Hides that your backend is express.
+app.use(helmet.frameguard({action: "DENY"})); // Stops your page fropm being used in an iframe(click hijacking).
+app.use(helmet.xssFilter()); // basic protection from unwanted scripts being run(via input forms etc).
+app.use(helmet.noSniff()); // MIME type Sniffing sets the X-Content-Type-Options to noSniff.
+app.use(helmet.ieNoOpen()) // sets the X-Download-Options header to noopen. This will prevent IE users from executing downloads in the trusted site’s context.
+
+const ninetyDaysInSeconds = 90*24*60*60;
+app.use(helmet.hsts({maxAge: ninetyDaysInSeconds, force: true})) // force https for 90 days. protection against non secure(http) request. 
+app.use(helmet.dnsPrefetchControl()); // stop DNS prefectching o
 
 
 
