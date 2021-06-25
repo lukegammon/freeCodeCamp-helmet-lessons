@@ -2,7 +2,10 @@ const express = require('express');
 const app = express();
 const helmet = require("helmet");
 
-app.use(helmet.hidePoweredBy());
+app.use(helmet.hidePoweredBy()); // Hides that your backend is express
+app.use(helmet.frameguard({action: "DENY"})); // Stops your page fropm being used in an iframe(click hijacking)
+app.use(helmet.xssFilter()); // basic protection from unwanted scripts being run(via input forms etc)
+app.use(helmet.noSniff()); // MIME type Sniffing sets the X-Content-Type-Options to noSniff
 
 
 
